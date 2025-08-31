@@ -19,6 +19,11 @@ struct CalculatorView: View {
     @State var subSecondNumber: String = ""
     @State var subResult: String = "?"
     
+    // 割り算電卓用の変数
+    @State var thirdFirstNumber: String = ""
+    @State var thirdSecondNumber: String = ""
+    @State var thirdResult: String = "?"
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 30) {
@@ -132,6 +137,60 @@ struct CalculatorView: View {
                 }
             }
             .padding()
+            
+            // 割り算算電卓
+            VStack(spacing: 20) {
+                Text("割り算電卓")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                HStack(spacing: 10) {
+                    // 1つ目の入力フィールド
+                    // @Stateのついたプロパティには$をつけるというおまじない。
+                    TextField("?", text: $thirdFirstNumber)
+                        .keyboardType(.numberPad)
+                        .frame(width: 60)
+                        .multilineTextAlignment(.center)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Text("➗")
+                        .font(.title)
+                    
+                    // 2つ目の入力フィールド
+                    TextField("?", text: $thirdSecondNumber)
+                        .keyboardType(.numberPad)
+                        .frame(width: 60)
+                        .multilineTextAlignment(.center)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Text("=")
+                        .font(.title)
+                    
+                    // 結果の表示
+                    Text(thirdResult)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .frame(width: 100)
+                        .multilineTextAlignment(.center)
+                }
+                
+                // 計算ボタン
+                Button(action: {
+                    // ここでボタンを押した時の挙動を記述
+                    // 今回は calculateSum() というメソッド(関数)を呼び出しています
+                    // 具体的な処理は calculateSum() 内に記述します
+                    calculateDivision()
+                }) {
+                    Text("割り算を計算する")
+                        .fontWeight(.bold)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
+            }
         }
     }
     
@@ -174,6 +233,27 @@ struct CalculatorView: View {
             subResult = String(Int(difference))
         } else {
             subResult = String(difference)
+        }
+    }
+    
+    // 割り算の処理
+    func calculateDivision() {
+        // 入力された文字列を数値に変換
+        guard let first = Double(thirdFirstNumber), let second = Double(thirdSecondNumber) else {
+            // 数値に変換できない場合はエラーメッセージを表示
+            thirdResult = "エラー"
+            return
+        }
+        
+        // 割り算を実行
+        let division = first / second
+        
+        // 結果を文字列に変換して表示
+        // 小数点以下が0の場合は整数として表示
+        if division == floor(division) {
+            thirdResult = String(Int(division))
+        } else {
+            thirdResult = String(division)
         }
     }
 }
