@@ -73,16 +73,30 @@ struct CalculatorView: View {
         
         Divider()
         
-        // TODO: - Challenge2
+        // **TODO: - Challenge2**
         // 引き算電卓も作ってみよう
         
     }
     
     // 足し算の処理
     func calculateSum() {
-        // TODO: - Challenge1
-        // ここに計算ロジックを記述し、計算結果を表示できるようにしてみよう
-
+        // 入力された文字列を数値に変換
+        guard let first = Double(firstNumber), let second = Double(secondNumber) else {
+            // 数値に変換できない場合はエラーメッセージを表示
+            result = "エラー"
+            return
+        }
+        
+        // 足し算を実行
+        let sum = first + second
+        
+        // 結果を文字列に変換して表示
+        // 小数点以下が0の場合は整数として表示
+        if sum == floor(sum) {
+            result = String(Int(sum))
+        } else {
+            result = String(sum)
+        }
     }
 }
 
