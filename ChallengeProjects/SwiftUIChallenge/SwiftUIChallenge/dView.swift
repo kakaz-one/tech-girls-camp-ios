@@ -9,7 +9,28 @@ import SwiftUI
 
 struct dView: View {
     var body: some View {
-        Text("D. 四角形の中に3つのテキストを等間隔に配置（異なるアライメント）")
+        Rectangle()
+            .fill(Color.red)
+            .frame(width: 300, height: 200)
+            .overlay(
+                VStack(spacing: 40) {
+                    Text("Left Aligned")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("Center Aligned")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    
+                    Text("Right Aligned")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                .padding()
+            )
     }
 }
 

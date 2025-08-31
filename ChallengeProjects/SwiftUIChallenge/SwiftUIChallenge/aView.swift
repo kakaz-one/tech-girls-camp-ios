@@ -9,7 +9,17 @@ import SwiftUI
 
 struct aView: View {
     var body: some View {
-        Text("A: 縦に3つの色付き長方形を等間隔で配置")
+        VStack(spacing: 20) {
+            Rectangle()
+                .fill(Color.red)
+                .frame(width: 200, height: 100)
+            Rectangle()
+                .fill(Color.green)
+                .frame(width: 200, height: 100)
+            Rectangle()
+                .fill(Color.blue)
+                .frame(width: 200, height: 100)
+        }
     }
 }
 
